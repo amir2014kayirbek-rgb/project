@@ -45,4 +45,8 @@ jobs:
           docker run -d --name as -p 8000:8000 -v "$PWD/data:/app/data" -e ARALSHIELD_INTERNAL_KEY=ci-key aralshield:ci
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8000/v1/settlements && break; sleep 2; done
           curl -fsS http://127.0.0.1:8000/ | grep -q AralShield
+          # эндпоинты, которым нужны rasterio/pyproj (карты, посадки)
+          curl -fsS "http://127.0.0.1:8000/v1/priorities?limit=3" > /dev/null
+          curl -fsS -X POST -H "Content-Type: application/json" -d '{"plan":"rating","area_ha":1000}' http://127.0.0.1:8000/v1/scenarios > /dev/null
+          docker exec as python -c "from aralshield.eye.classify import ensure_sector_distance; from aralshield.forecast import predict"
           docker logs as

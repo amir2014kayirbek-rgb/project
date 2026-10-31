@@ -76,6 +76,10 @@ def _refresh_loop() -> None:
     from aralshield import db
     from aralshield.forecast import predict
 
+    try:  # база собирается в фоне: порт открыт сразу, хостинг не считает запуск зависшим
+        _bootstrap_db()
+    except Exception:
+        log.exception("сборка базы не удалась")
     while True:
         try:
             last = db.rows("SELECT MAX(issue_date) AS d FROM forecasts WHERE mode='live'")[0]["d"]
@@ -93,7 +97,8 @@ def main() -> None:
         return
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     _env_defaults()
-    _bootstrap_db()
+    from aralshield import db
+    db.init()  # таблицы — сразу, данные — в фоне
     threading.Thread(target=_refresh_loop, daemon=True, name="refresh").start()
     from aralshield.cli import main as cli
     cli(["serve", "--host", "0.0.0.0", "--port", os.environ.get("PORT", "10000")])

@@ -16,13 +16,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONIOENCODING=utf-8 \
     TZ=Asia/Qyzylorda \
     ARALSHIELD_DATA=/app/data
-# libgomp1 нужен LightGBM; tzdata — для расписания по местному времени
+# libgomp1 нужен LightGBM, libexpat1 — rasterio (GDAL); tzdata — для расписания по местному времени
 RUN apt-get update \
- && apt-get install -y --no-install-recommends libgomp1 tzdata ca-certificates curl \
+ && apt-get install -y --no-install-recommends libgomp1 libexpat1 tzdata ca-certificates curl \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+ && python -c "import rasterio, lightgbm, pyproj, sklearn, pandas"   # сборка падает, если не хватает системных библиотек
 COPY aralshield/ ./aralshield/
 COPY deploy/ ./deploy/
 COPY --from=web /web/dist ./frontend/dist
