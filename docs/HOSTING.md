@@ -17,9 +17,15 @@ AralShield — это не статический сайт: работает API
    сгенерируются сами. Имя хоста для защиты `Host` берётся из `RENDER_EXTERNAL_HOSTNAME` автоматически.
 3. Первая сборка ≈10 минут. Затем откройте адрес сервиса: панель работает, через ~1 минуту появится
    свежий прогноз (проверка — `/v1/health`).
-4. Утреннее пробуждение: GitHub → репозиторий → **Settings → Secrets and variables → Actions → Variables →
-   New variable**: `SITE_URL` = `https://<имя>.onrender.com`. Workflow `.github/workflows/wake.yml`
-   будет открывать сайт в 05:40 и 12:00 по UTC+5 — сервис проснётся и выпустит прогноз на сегодня.
+4. **Ежедневный прогноз (обязательно).** Open-Meteo отвечает общему IP бесплатного Render ошибкой
+   HTTP 429, поэтому сам сервер погоду получить не может (прогноз тогда помечен «упрощённый режим»).
+   Прогноз считает GitHub Actions и отправляет на сайт:
+   - Render → сервис → **Environment** → скопируйте значение `ARALSHIELD_INTERNAL_KEY`;
+   - GitHub → **Settings → Secrets and variables → Actions**:
+     вкладка **Secrets** → New secret `ARALSHIELD_INTERNAL_KEY` = скопированное значение;
+     вкладка **Variables** → New variable `SITE_URL` = `https://<имя>.onrender.com`;
+   - GitHub → **Actions → Daily forecast → Run workflow** — первый запуск вручную (≈3 мин).
+   Дальше workflow `.github/workflows/wake.yml` сам выпускает прогноз в 05:30 и 12:00 по UTC+5.
 5. Свой домен (необязательно): Render → Settings → Custom Domains; DNS можно бесплатно держать в Cloudflare
    (CNAME на `<имя>.onrender.com`, прокси Cloudflare — «DNS only», чтобы Render выпустил сертификат).
 

@@ -610,6 +610,27 @@ class SubscriptionIn(BaseModel):
     send_hour: int | None = Field(None, ge=0, le=23)
 
 
+class ForecastImport(BaseModel):
+    items: list[dict] = Field(min_length=1, max_length=200)
+
+
+@app.post("/v1/forecasts/import", dependencies=[Depends(require_internal)], **INTERNAL)
+def forecasts_import(body: ForecastImport):
+    """Приём готового живого выпуска, посчитанного вне сервера (GitHub Actions).
+    Нужен бесплатным хостингам, чьи общие IP-адреса Open-Meteo ограничивает (HTTP 429)."""
+    for it in body.items:
+        p = it.get("probability")
+        if (it.get("station") not in STATION_BY_ID or it.get("mode", "live") != "live"
+                or it.get("horizon") not in (0, 1, 2) or not isinstance(p, (int, float)) or not 0 <= p <= 1):
+            raise HTTPException(422, "некорректная запись прогноза")
+        try:
+            date.fromisoformat(it["issue_date"]), date.fromisoformat(it["day"])
+        except (KeyError, TypeError, ValueError):
+            raise HTTPException(422, "некорректная дата прогноза")
+    db.save_forecasts(body.items)
+    return {"ok": True, "saved": len(body.items)}
+
+
 @app.post("/v1/subscriptions", dependencies=[Depends(require_internal)], **INTERNAL)
 def subscribe(body: SubscriptionIn):
     st = _station_for(body.station)

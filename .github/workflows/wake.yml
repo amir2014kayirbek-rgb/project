@@ -1,26 +1,38 @@
-# Бесплатный хостинг засыпает без запросов. Этот workflow утром «будит» сайт,
-# а при пробуждении сервис сам выпускает свежий прогноз (deploy/render_start.py).
-# Включение: Settings → Secrets and variables → Actions → Variables → SITE_URL = https://<имя>.onrender.com
-name: Wake site
+# Ежедневный прогноз для бесплатного хостинга.
+# Open-Meteo ограничивает общий IP бесплатного Render (HTTP 429), поэтому выпуск
+# считается здесь, на раннере GitHub, и отправляется на сайт по внутреннему ключу.
+# Настройка (один раз), GitHub → Settings → Secrets and variables → Actions:
+#   Variables: SITE_URL = https://<имя>.onrender.com
+#   Secrets:   ARALSHIELD_INTERNAL_KEY = значение одноимённой переменной из Render → Environment
+name: Daily forecast
 
 on:
   schedule:
-    - cron: "40 0 * * *"   # 05:40 по UTC+5
-    - cron: "0 7 * * *"    # 12:00 по UTC+5 — повторная проверка свежести
+    - cron: "30 0 * * *"   # 05:30 по UTC+5
+    - cron: "0 7 * * *"    # 12:00 по UTC+5 — повтор (сайт мог перезапуститься и потерять выпуск)
   workflow_dispatch:
 
 jobs:
-  wake:
+  forecast:
     if: ${{ vars.SITE_URL != '' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Wake and wait for fresh forecast
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Wake site
         run: |
-          for i in $(seq 1 20); do
-            if curl -fsS --max-time 60 "${{ vars.SITE_URL }}/v1/health" -o h.json; then
-              cat h.json; echo
-              grep -q '"forecast_fresh":true' h.json && exit 0
-            fi
-            sleep 30
+          for i in $(seq 1 10); do
+            curl -fsS --max-time 90 "${{ vars.SITE_URL }}/v1/settlements" -o /dev/null && exit 0
+            sleep 20
           done
-          echo "Прогноз не обновился за 10 минут"; exit 1
+          exit 1
+      - name: Issue and push forecast
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          ARALSHIELD_INTERNAL_KEY: ${{ secrets.ARALSHIELD_INTERNAL_KEY }}
+          PYTHONIOENCODING: utf-8
+        run: python deploy/push_forecast.py

@@ -368,9 +368,11 @@ python -m aralshield.cli backtest && python -m aralshield.cli daily && python -m
    Render прочитает [`render.yaml`](render.yaml) и соберёт Docker-образ (≈10 минут при первом деплое).
 2. Откройте адрес вида `https://aralshield-xxxx.onrender.com` — панель работает сразу: данные и модели уже в образе,
    база собирается при старте за ~20 с, свежий прогноз появляется примерно через минуту.
-3. Чтобы утром сайт сам «просыпался» и обновлял прогноз: в GitHub → **Settings → Secrets and variables → Actions →
-   Variables** добавьте `SITE_URL` = ваш адрес на Render. Workflow [`wake.yml`](.github/workflows/wake.yml)
-   будет будить сайт в 05:40 и 12:00.
+3. **Ежедневный прогноз:** Open-Meteo ограничивает общий IP бесплатного Render (HTTP 429), поэтому прогноз
+   считает GitHub Actions и отправляет на сайт. Один раз: скопируйте `ARALSHIELD_INTERNAL_KEY` из Render →
+   Environment в GitHub → Settings → Secrets and variables → Actions → **Secrets**, а адрес сайта — в
+   **Variables** как `SITE_URL`; затем Actions → **Daily forecast** → Run workflow. Дальше
+   [`wake.yml`](.github/workflows/wake.yml) выпускает прогноз сам в 05:30 и 12:00.
 
 Ограничения бесплатного варианта: первое открытие после простоя занимает ≈1 минуту; Telegram-бот там постоянно
 не работает (для показа бота запустите `cli bot` на ноутбуке). Свой домен можно бесплатно подключить к Render

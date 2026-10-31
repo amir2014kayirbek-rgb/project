@@ -233,3 +233,16 @@ def test_stale_forecast_flags(client, cdb):
     j = client.get("/v1/forecasts", params={"settlement": "aralsk"}).json()
     assert j["stale"] is True and [h["past"] for h in j["horizons"]] == [True, False, False]
     assert "(выпуск" in client.get("/v1/summary").text
+
+
+def test_forecast_import_requires_key_and_validates(client):
+    item = {"station": "kazalinsk", "issue_date": "2027-05-01", "horizon": 0, "day": "2027-05-01",
+            "probability": 0.4, "level": "yellow", "levels_json": {"public": "yellow"}, "mode": "live",
+            "model_version": "test"}
+    assert client.post("/v1/forecasts/import", json={"items": [item]}, headers={"X-Internal-Key": "wrong"}).status_code == 403
+    assert client.post("/v1/forecasts/import", json={"items": [dict(item, probability=7)]}).status_code == 422
+    assert client.post("/v1/forecasts/import", json={"items": [dict(item, station="x")]}).status_code == 422
+    r = client.post("/v1/forecasts/import", json={"items": [item]})
+    assert r.status_code == 200 and r.json()["saved"] == 1
+    j = client.get("/v1/forecasts", params={"settlement": "kazalinsk"}).json()
+    assert j["issue_date"] == "2027-05-01" and j["horizons"][0]["probability"] == 0.4
