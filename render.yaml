@@ -1,0 +1,18 @@
+# Бесплатный хостинг на Render (Blueprint): Dashboard → New → Blueprint → выбрать этот репозиторий.
+# Подробно — docs/HOSTING.md, раздел «Бесплатно: Render».
+services:
+  - type: web
+    name: aralshield
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerCommand: python deploy/render_start.py
+    healthCheckPath: /v1/settlements
+    autoDeploy: true
+    envVars:
+      - key: ARALSHIELD_INTERNAL_KEY
+        generateValue: true
+      - key: ARALSHIELD_HASH_PEPPER
+        generateValue: true
+      - key: ARALSHIELD_RATE_LIMIT
+        value: "120"

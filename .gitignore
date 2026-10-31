@@ -7,7 +7,11 @@ frontend/node_modules/
 frontend/dist/
 .env
 # сырые и тяжёлые данные — восстанавливаются командой `python -m aralshield.cli all`
-data/raw/
+data/raw/*
+!data/raw/era5/
+data/raw/era5/*
+# роза ветров ERA5 для «Щита» (3 МБ) — чтобы сервер не скачивал её при запуске
+!data/raw/era5/wind_*.parquet
 data/eye/*.tif
 data/eye/*.npy
 data/aralshield.sqlite*

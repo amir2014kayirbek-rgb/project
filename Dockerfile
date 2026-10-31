@@ -26,8 +26,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY aralshield/ ./aralshield/
 COPY deploy/ ./deploy/
 COPY --from=web /web/dist ./frontend/dist
+# Готовые результаты конвейера из репозитория: панель работает сразу после развёртывания.
+# В docker compose каталоги перекрываются томами с сервера (см. docs/HOSTING.md).
+COPY data/ ./data/
+COPY models/ ./models/
+COPY reports/ ./reports/
 
-# Данные, модели и отчёты живут в томах (см. docker-compose.yml)
 RUN mkdir -p /app/data /app/models /app/reports \
  && useradd --create-home --uid 1000 aral \
  && chown -R aral:aral /app
