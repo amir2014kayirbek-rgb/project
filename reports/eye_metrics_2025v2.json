@@ -1,0 +1,637 @@
+{
+  "tag": "2025v2",
+  "cv": {
+    "overall_accuracy": 0.9996,
+    "oa_ci95": [
+      0.9990448742801605,
+      0.9998803801353182
+    ],
+    "kappa": 0.9995,
+    "kappa_ci95": [
+      0.9988032071115597,
+      0.9998497891050515
+    ],
+    "macro_f1_ci95": [
+      0.9990465927289578,
+      0.9998796638470113
+    ],
+    "f1": {
+      "Потенциальный источник": 0.9993337774816788,
+      "Песок": 0.9996665555185061,
+      "Влажный солончак": 1.0,
+      "Растительность": 0.9996667777407531,
+      "Вода": 0.9993328885923949
+    },
+    "f1_ci95": {
+      "Потенциальный источник": [
+        0.9984852197545164,
+        1.0
+      ],
+      "Песок": [
+        0.9989686070304038,
+        1.0
+      ],
+      "Влажный солончак": [
+        1.0,
+        1.0
+      ],
+      "Растительность": [
+        0.9987916563751333,
+        1.0
+      ],
+      "Вода": [
+        0.9983449488321263,
+        1.0
+      ]
+    },
+    "iou": {
+      "Потенциальный источник": 0.9986684420772304,
+      "Песок": 0.9993333333333333,
+      "Влажный солончак": 1.0,
+      "Растительность": 0.9993337774816788,
+      "Вода": 0.9986666666666667
+    },
+    "confusion_matrix": [
+      [
+        1500,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1499,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1500,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1500,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        1,
+        1498
+      ]
+    ],
+    "n_samples": 7500,
+    "class_counts": {
+      "Потенциальный источник": 1500,
+      "Песок": 1500,
+      "Влажный солончак": 1500,
+      "Растительность": 1500,
+      "Вода": 1500
+    },
+    "validation": "блочная пространственная CV, блоки 10×10 км, 5 фолдов; CI — бутстреп по блокам (300 повторов)",
+    "metric_kind": "agreement_with_weak_labels",
+    "informative": false,
+    "meaning_ru": "согласие модели со слабой разметкой на отложенных блоках; метки получены правилами по тем же каналам и индексам, поэтому это НЕ точность относительно местности; гипотезу H1 (OA ≥ 80%) этим проверить нельзя — нужна экспертная разметка",
+    "meaning_kk": "модельдің әлсіз белгілермен шеттетілген блоктардағы келісімі; белгілер сол арналар мен индекстер бойынша ережелермен алынған, сондықтан бұл жергілікті жердегі дәлдік ЕМЕС; H1 гипотезасын (OA ≥ 80%) бұлай тексеруге болмайды — сарапшылық белгілеу қажет",
+    "meaning": "согласие модели со слабой разметкой на отложенных блоках; метки получены правилами по тем же каналам и индексам, поэтому это НЕ точность относительно местности; гипотезу H1 (OA ≥ 80%) этим проверить нельзя — нужна экспертная разметка"
+  },
+  "external_worldcover": {
+    "independent": false,
+    "reference": "ESA WorldCover 2021",
+    "evaluated_on": "пиксели без слабой метки и вне обучающей выборки",
+    "n_pixels": 608060,
+    "overall_agreement": 0.9006824984376541,
+    "kappa": 0.10780391931180588,
+    "recall": {
+      "water": 0.05510821769173662,
+      "veg": 0.04939275244500283,
+      "bare": 0.9904410534660955
+    },
+    "baseline_majority": 0.9044436404302207,
+    "baseline_majority_class": "bare",
+    "gain_over_baseline": -0.003761141992566608,
+    "unlabelled_blocks": {
+      "n_pixels": 31985,
+      "overall_agreement": 0.9157417539471627,
+      "kappa": 0.007232565245037792,
+      "recall": {
+        "water": null,
+        "veg": 0.004069552349241583,
+        "bare": 0.9998975479816953
+      },
+      "baseline_majority": 0.9154916367047053,
+      "baseline_majority_class": "bare",
+      "gain_over_baseline": 0.00025011724245738165,
+      "note": "только блоки 10×10 км без слабых меток"
+    },
+    "including_weak_labelled_pixels": {
+      "n_pixels": 996528,
+      "overall_agreement": 0.938717226209399,
+      "kappa": 0.7265407239679018,
+      "baseline_majority": 0.851934918035419
+    },
+    "note_ru": "согласие с WorldCover, не независимая проверка: метки воды и растительности взяты из WorldCover; WorldCover 2021 к тому же устарел для береговой линии 2025 г.",
+    "note_kk": "WorldCover-пен келісім, тәуелсіз тексеру емес: су мен өсімдік белгілері WorldCover-ден алынған; оның үстіне WorldCover 2021 жағалау сызығының 2025 жылғы күйін көрсетпейді",
+    "note": "согласие с WorldCover, не независимая проверка: метки воды и растительности взяты из WorldCover; WorldCover 2021 к тому же устарел для береговой линии 2025 г."
+  },
+  "feature_importance": {
+    "NDVI": 0.1689,
+    "NDWI": 0.1506,
+    "B11": 0.0848,
+    "B2": 0.0828,
+    "B3": 0.0677,
+    "BSI": 0.0652,
+    "SI": 0.0556,
+    "BRIGHT": 0.054,
+    "NDMI": 0.0476,
+    "TGSI": 0.0451,
+    "B12": 0.0444,
+    "B8A": 0.0395,
+    "B8": 0.0301,
+    "B4": 0.0259,
+    "B7": 0.0183,
+    "B6": 0.0106,
+    "B5": 0.0081,
+    "NMDI": 0.0008
+  },
+  "area_km2": {
+    "Потенциальный источник": 26651.5,
+    "Песок": 47696.1,
+    "Влажный солончак": 23822.7,
+    "Растительность": 7987.9,
+    "Вода": 5575.8
+  },
+  "area_note_ru": "площади классов — по карте модели, обученной на сбалансированной выборке (по 1500 пикселей на класс + class_weight='balanced'), т. е. с равным априором классов; поэтому редкие классы (влажный солончак) на карте завышены, площади — индикативные, не учётные",
+  "area_note_kk": "класс аудандары теңестірілген іріктемеде (әр класқа 1500 пиксель + class_weight='balanced') оқытылған модель картасы бойынша, яғни кластардың априорлары тең; сондықтан сирек кластар (ылғалды сортаң) асыра көрсетілген, аудандар индикативті",
+  "weak_label_counts": {
+    "Потенциальный источник": 284007,
+    "Песок": 280296,
+    "Влажный солончак": 2509,
+    "Растительность": 53234,
+    "Вода": 85686
+  },
+  "label_thresholds": {
+    "calibrated_on": "2025v2",
+    "thresholds": {
+      "wet_bright_max": 0.20981429517269135,
+      "wet_ndmi_min": -0.06961742788553238,
+      "salt_bright_min": 0.3032350540161133,
+      "salt_ratio_min": 0.7383830547332764,
+      "salt_si_min": 0.2855634093284607,
+      "sand_tgsi_min": 0.15776866674423218,
+      "sand_ndmi_max": -0.12091495841741562
+    },
+    "quantiles": {
+      "wet_bright_max": [
+        "BRIGHT",
+        20
+      ],
+      "wet_ndmi_min": [
+        "NDMI",
+        70
+      ],
+      "salt_bright_min": [
+        "BRIGHT",
+        75
+      ],
+      "salt_ratio_min": [
+        "RATIO",
+        60
+      ],
+      "salt_si_min": [
+        "SI",
+        70
+      ],
+      "sand_tgsi_min": [
+        "TGSI",
+        75
+      ],
+      "sand_ndmi_max": [
+        "NDMI",
+        40
+      ]
+    },
+    "method": "перцентили голого пула сцены калибровки; далее пороги фиксированы",
+    "reused": false
+  },
+  "labels": "слабая разметка: WorldCover 2021 (вода, растительность) + спектральные правила (голое дно)",
+  "overlays": {
+    "png_crs": "EPSG:3857",
+    "note": "PNG построены в EPSG:3857, границы — углы в градусах WGS84 (Leaflet imageOverlay)"
+  },
+  "sector_source": {
+    "aralsk": [
+      0.00134,
+      0.00078,
+      0.00278,
+      0.01787,
+      0.00649,
+      0.00367,
+      0.00407,
+      0.0266,
+      0.05688,
+      0.25375,
+      0.39228,
+      0.1205,
+      0.01218,
+      0.00419,
+      0.00717,
+      0.00195
+    ],
+    "kazalinsk": [
+      0.03478,
+      0.00435,
+      0.00012,
+      8e-05,
+      0.00016,
+      8e-05,
+      4e-05,
+      0.00043,
+      0.01284,
+      0.06935,
+      0.3189,
+      0.538,
+      0.32549,
+      0.05878,
+      0.01321,
+      0.03766
+    ],
+    "zhosaly": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.00015,
+      0.12297,
+      0.19128,
+      0.03682,
+      0.03806,
+      0.0
+    ],
+    "kyzylorda": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.00105,
+      0.00045,
+      0.0,
+      0.0
+    ]
+  },
+  "sector_coverage": {
+    "aralsk": [
+      0.1011,
+      0.116,
+      0.1599,
+      0.125,
+      0.1091,
+      0.1251,
+      0.1966,
+      0.4962,
+      0.9543,
+      0.9878,
+      0.9995,
+      0.9993,
+      0.9901,
+      0.471,
+      0.1832,
+      0.116
+    ],
+    "kazalinsk": [
+      0.5418,
+      0.0975,
+      0.0276,
+      0.0163,
+      0.014,
+      0.0164,
+      0.0276,
+      0.0977,
+      0.5518,
+      0.6637,
+      0.8418,
+      0.9985,
+      0.9994,
+      0.9986,
+      0.8318,
+      0.6499
+    ],
+    "zhosaly": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0577,
+      0.4241,
+      0.4967,
+      0.4471,
+      0.2011,
+      0.0
+    ],
+    "kyzylorda": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0808,
+      0.0382,
+      0.0,
+      0.0
+    ]
+  },
+  "sector_coverage_mean": {
+    "aralsk": 0.446,
+    "kazalinsk": 0.461,
+    "zhosaly": 0.102,
+    "kyzylorda": 0.007
+  },
+  "sector_coverage_low": [
+    {
+      "station": "aralsk",
+      "sector": "N",
+      "coverage": 0.1011
+    },
+    {
+      "station": "aralsk",
+      "sector": "NNE",
+      "coverage": 0.116
+    },
+    {
+      "station": "aralsk",
+      "sector": "NE",
+      "coverage": 0.1599
+    },
+    {
+      "station": "aralsk",
+      "sector": "ENE",
+      "coverage": 0.125
+    },
+    {
+      "station": "aralsk",
+      "sector": "E",
+      "coverage": 0.1091
+    },
+    {
+      "station": "aralsk",
+      "sector": "ESE",
+      "coverage": 0.1251
+    },
+    {
+      "station": "aralsk",
+      "sector": "SE",
+      "coverage": 0.1966
+    },
+    {
+      "station": "aralsk",
+      "sector": "SSE",
+      "coverage": 0.4962
+    },
+    {
+      "station": "aralsk",
+      "sector": "WNW",
+      "coverage": 0.471
+    },
+    {
+      "station": "aralsk",
+      "sector": "NW",
+      "coverage": 0.1832
+    },
+    {
+      "station": "aralsk",
+      "sector": "NNW",
+      "coverage": 0.116
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "NNE",
+      "coverage": 0.0975
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "NE",
+      "coverage": 0.0276
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "ENE",
+      "coverage": 0.0163
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "E",
+      "coverage": 0.014
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "ESE",
+      "coverage": 0.0164
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "SE",
+      "coverage": 0.0276
+    },
+    {
+      "station": "kazalinsk",
+      "sector": "SSE",
+      "coverage": 0.0977
+    },
+    {
+      "station": "zhosaly",
+      "sector": "N",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "NNE",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "NE",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "ENE",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "E",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "ESE",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "SE",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "SSE",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "S",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "SSW",
+      "coverage": 0.0
+    },
+    {
+      "station": "zhosaly",
+      "sector": "SW",
+      "coverage": 0.0577
+    },
+    {
+      "station": "zhosaly",
+      "sector": "WSW",
+      "coverage": 0.4241
+    },
+    {
+      "station": "zhosaly",
+      "sector": "W",
+      "coverage": 0.4967
+    },
+    {
+      "station": "zhosaly",
+      "sector": "WNW",
+      "coverage": 0.4471
+    },
+    {
+      "station": "zhosaly",
+      "sector": "NW",
+      "coverage": 0.2011
+    },
+    {
+      "station": "zhosaly",
+      "sector": "NNW",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "N",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "NNE",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "NE",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "ENE",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "E",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "ESE",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "SE",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "SSE",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "S",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "SSW",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "SW",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "WSW",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "W",
+      "coverage": 0.0808
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "WNW",
+      "coverage": 0.0382
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "NW",
+      "coverage": 0.0
+    },
+    {
+      "station": "kyzylorda",
+      "sector": "NNW",
+      "coverage": 0.0
+    }
+  ],
+  "sector_normalisation": "F_s = Σ w·p / Σ w по валидным пикселям сектора, w = exp(−d/L)·площадь, d ≤ R; coverage = Σ w(валидные) / Σ w(весь сектор). При coverage < 0.2 берётся нижняя оценка Σ w·p / Σ w(весь сектор)"
+}

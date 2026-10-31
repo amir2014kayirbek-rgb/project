@@ -1,0 +1,23 @@
+# AralShield «Тұз дауылы» — зависимости Python 3.10+
+pandas==2.3.3
+numpy==2.2.6
+pyarrow==25.0.1
+scipy==1.15.3
+scikit-learn==1.7.2
+lightgbm==4.7.0
+joblib==1.6.0
+matplotlib==3.10.9
+requests==2.34.2
+rasterio==1.4.4
+pyproj==3.7.1
+pystac-client==0.9.1
+pillow==12.3.0
+pyshp==3.1.6
+fastapi==0.162.0
+uvicorn==0.54.0
+pydantic==2.13.5
+aiogram==3.31.0
+certifi==2026.10.23
+# тесты (httpx нужен starlette.testclient)
+pytest==9.1.1
+httpx==0.28.1

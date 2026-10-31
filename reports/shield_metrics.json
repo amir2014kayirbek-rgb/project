@@ -1,0 +1,629 @@
+{
+  "tag": "2025v2",
+  "cells": 26464,
+  "cell_km": 2,
+  "base_params": {
+    "L": 100.0,
+    "vt": 8.0,
+    "suit_power": 1.0,
+    "weights": "base"
+  },
+  "distance_cap_km": 300,
+  "m_min_top": 0.4,
+  "suitable_share_m_gt_0_5": 0.5827,
+  "sensitivity": {
+    "scenarios": 180,
+    "compared_scenarios": 179,
+    "base_excluded": true,
+    "top_n": 200,
+    "grid": {
+      "L": [
+        50,
+        100,
+        150,
+        200
+      ],
+      "vt": [
+        6.0,
+        8.0,
+        10.0
+      ],
+      "suit_power": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "weights": [
+        "base",
+        "equal",
+        "veg+",
+        "moist+",
+        "salt+"
+      ]
+    },
+    "suit_weight_sets": {
+      "base": [
+        0.35,
+        0.25,
+        0.25,
+        0.15
+      ],
+      "equal": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "veg+": [
+        0.45,
+        0.2,
+        0.2,
+        0.15
+      ],
+      "moist+": [
+        0.25,
+        0.4,
+        0.2,
+        0.15
+      ],
+      "salt+": [
+        0.25,
+        0.2,
+        0.4,
+        0.15
+      ]
+    },
+    "kendall_tau_top_mean": 0.3647328552271582,
+    "kendall_tau_top_min": -0.08886493146465423,
+    "kendall_tau_all_mean": 0.878604372139419,
+    "kendall_tau_all_min": 0.7726044953201565,
+    "top_overlap_mean": 0.7591061452513966,
+    "top_overlap_min": 0.49,
+    "rbo_mean": 0.5535451564884419,
+    "rbo_min": 0.21018063237168344,
+    "rbo_p": 0.98,
+    "by_parameter": {
+      "L": {
+        "50": {
+          "tau_top": 0.2407,
+          "overlap": 0.6927,
+          "rbo": 0.511
+        },
+        "100": {
+          "tau_top": 0.5204,
+          "overlap": 0.8367,
+          "rbo": 0.6895
+        },
+        "150": {
+          "tau_top": 0.402,
+          "overlap": 0.7783,
+          "rbo": 0.5707
+        },
+        "200": {
+          "tau_top": 0.2993,
+          "overlap": 0.7304,
+          "rbo": 0.446
+        }
+      },
+      "vt": {
+        "6.0": {
+          "tau_top": 0.3366,
+          "overlap": 0.7442,
+          "rbo": 0.5277
+        },
+        "8.0": {
+          "tau_top": 0.3704,
+          "overlap": 0.763,
+          "rbo": 0.5625
+        },
+        "10.0": {
+          "tau_top": 0.3873,
+          "overlap": 0.7702,
+          "rbo": 0.5706
+        }
+      },
+      "suit_power": {
+        "0.5": {
+          "tau_top": 0.3248,
+          "overlap": 0.7329,
+          "rbo": 0.515
+        },
+        "1.0": {
+          "tau_top": 0.5037,
+          "overlap": 0.8282,
+          "rbo": 0.6552
+        },
+        "2.0": {
+          "tau_top": 0.2681,
+          "overlap": 0.7173,
+          "rbo": 0.492
+        }
+      },
+      "weights": {
+        "base": {
+          "tau_top": 0.371,
+          "overlap": 0.763,
+          "rbo": 0.5585
+        },
+        "equal": {
+          "tau_top": 0.3822,
+          "overlap": 0.7692,
+          "rbo": 0.5638
+        },
+        "moist+": {
+          "tau_top": 0.4747,
+          "overlap": 0.8115,
+          "rbo": 0.6356
+        },
+        "salt+": {
+          "tau_top": 0.3071,
+          "overlap": 0.7289,
+          "rbo": 0.5204
+        },
+        "veg+": {
+          "tau_top": 0.2889,
+          "overlap": 0.7231,
+          "rbo": 0.4896
+        }
+      }
+    },
+    "no_distance_cap": {
+      "tau_top": 0.5965824947788114,
+      "tau_all": 0.925432041549917,
+      "overlap": 0.85,
+      "rbo": 0.733095280242255,
+      "note": "базовые параметры без обрезки d ≤ 300 км"
+    },
+    "robust_cells": 90,
+    "robust_definition": "ячейка в топ-N не менее чем в 80% сценариев сетки (включая базовый)"
+  },
+  "wind_rose_8ms": {
+    "N": 0.0037,
+    "NNE": 0.0071,
+    "NE": 0.0179,
+    "ENE": 0.0158,
+    "E": 0.0088,
+    "ESE": 0.0058,
+    "SE": 0.0026,
+    "SSE": 0.0029,
+    "S": 0.0034,
+    "SSW": 0.0052,
+    "SW": 0.0068,
+    "WSW": 0.0076,
+    "W": 0.0117,
+    "WNW": 0.0111,
+    "NW": 0.008,
+    "NNW": 0.0035
+  },
+  "class_counts": {
+    "низкий": 18524,
+    "средний": 6420,
+    "высокий": 1436,
+    "надёжный высокий": 84
+  },
+  "comparison_1000ha": {
+    "area_ha": 1000.0,
+    "cell_ha": 400,
+    "by_rating": {
+      "cells": 3,
+      "area_ha": 1000.0,
+      "total_reduction_pct": 0.030825376314743403,
+      "people_weighted_reduction": 1540.2614758008865,
+      "per_settlement": [
+        {
+          "settlement": "aralsk",
+          "name_ru": "Аральск",
+          "name_kk": "Арал",
+          "population": 30000,
+          "load_before": 132847.59035068855,
+          "load_after": 132826.78954337363,
+          "reduction_pct": 0.015657647428918595
+        },
+        {
+          "settlement": "saksaulsky",
+          "name_ru": "Саксаульский",
+          "name_kk": "Сексеуіл",
+          "population": 13000,
+          "load_before": 43768.27900256123,
+          "load_after": 43763.49697218783,
+          "reduction_pct": 0.010925790280941039
+        },
+        {
+          "settlement": "kamystybas",
+          "name_ru": "Камыстыбас",
+          "name_kk": "Қамыстыбас",
+          "population": 4000,
+          "load_before": 26601.688706409775,
+          "load_after": 26595.894185124398,
+          "reduction_pct": 0.021782531738224583
+        },
+        {
+          "settlement": "zhalanash",
+          "name_ru": "Жаланаш",
+          "name_kk": "Жалаңаш",
+          "population": 2000,
+          "load_before": 18923.921870979444,
+          "load_after": 18921.909083278202,
+          "reduction_pct": 0.01063620804907566
+        },
+        {
+          "settlement": "akespe",
+          "name_ru": "Акеспе",
+          "name_kk": "Ақеспе",
+          "population": 1000,
+          "load_before": 5054.167369269357,
+          "load_after": 5053.796123830494,
+          "reduction_pct": 0.007345333300983589
+        },
+        {
+          "settlement": "karateren",
+          "name_ru": "Каратерен",
+          "name_kk": "Қаратерең",
+          "population": 2500,
+          "load_before": 27706.401923556976,
+          "load_after": 27704.220506046426,
+          "reduction_pct": 0.007873333811328896
+        },
+        {
+          "settlement": "kazalinsk",
+          "name_ru": "Казалинск",
+          "name_kk": "Қазалы",
+          "population": 7000,
+          "load_before": 60211.384637788135,
+          "load_after": 60195.23971797691,
+          "reduction_pct": 0.026813732831999497
+        },
+        {
+          "settlement": "aiteke_bi",
+          "name_ru": "Айтеке би",
+          "name_kk": "Әйтеке би",
+          "population": 30000,
+          "load_before": 236962.64813654133,
+          "load_after": 236894.00906399626,
+          "reduction_pct": 0.028966199139336783
+        },
+        {
+          "settlement": "bekarys",
+          "name_ru": "Бекарыстан би",
+          "name_kk": "Бекарыстан би",
+          "population": 2000,
+          "load_before": 21008.73221794913,
+          "load_after": 21004.495167884656,
+          "reduction_pct": 0.020168042604948987
+        },
+        {
+          "settlement": "zhosaly",
+          "name_ru": "Жосалы",
+          "name_kk": "Жосалы",
+          "population": 18000,
+          "load_before": 24914.84107684966,
+          "load_after": 24903.34425928151,
+          "reduction_pct": 0.04614445475565287
+        },
+        {
+          "settlement": "baikonur",
+          "name_ru": "Байконур",
+          "name_kk": "Байқоңыр",
+          "population": 70000,
+          "load_before": 239700.28541991103,
+          "load_after": 239621.4805508539,
+          "reduction_pct": 0.03287641853202809
+        },
+        {
+          "settlement": "kyzylorda",
+          "name_ru": "Кызылорда",
+          "name_kk": "Қызылорда",
+          "population": 330000,
+          "load_before": 10207.797185399302,
+          "load_after": 10161.691973060955,
+          "reduction_pct": 0.4516666181837297
+        }
+      ],
+      "cell_ids": [
+        12069,
+        21256,
+        13278
+      ],
+      "unknown_ids": []
+    },
+    "nearest_suitable": {
+      "cells": 3,
+      "area_ha": 1000.0,
+      "total_reduction_pct": 2.9472173868002205e-05,
+      "people_weighted_reduction": 1.3434896356870836,
+      "per_settlement": [
+        {
+          "settlement": "aralsk",
+          "name_ru": "Аральск",
+          "name_kk": "Арал",
+          "population": 30000,
+          "load_before": 132847.59035068855,
+          "load_after": 132847.5162221455,
+          "reduction_pct": 5.579968959931153e-05
+        },
+        {
+          "settlement": "saksaulsky",
+          "name_ru": "Саксаульский",
+          "name_kk": "Сексеуіл",
+          "population": 13000,
+          "load_before": 43768.27900256123,
+          "load_after": 43768.2735840465,
+          "reduction_pct": 1.2380004074178532e-05
+        },
+        {
+          "settlement": "kamystybas",
+          "name_ru": "Камыстыбас",
+          "name_kk": "Қамыстыбас",
+          "population": 4000,
+          "load_before": 26601.688706409775,
+          "load_after": 26601.685945295547,
+          "reduction_pct": 1.0379469736325166e-05
+        },
+        {
+          "settlement": "zhalanash",
+          "name_ru": "Жаланаш",
+          "name_kk": "Жалаңаш",
+          "population": 2000,
+          "load_before": 18923.921870979444,
+          "load_after": 18923.92014324059,
+          "reduction_pct": 9.129919611917454e-06
+        },
+        {
+          "settlement": "akespe",
+          "name_ru": "Акеспе",
+          "name_kk": "Ақеспе",
+          "population": 1000,
+          "load_before": 5054.167369269357,
+          "load_after": 5054.166548055768,
+          "reduction_pct": 1.6248246822996223e-05
+        },
+        {
+          "settlement": "karateren",
+          "name_ru": "Каратерен",
+          "name_kk": "Қаратерең",
+          "population": 2500,
+          "load_before": 27706.401923556976,
+          "load_after": 27706.40003332414,
+          "reduction_pct": 6.822368500547797e-06
+        },
+        {
+          "settlement": "kazalinsk",
+          "name_ru": "Казалинск",
+          "name_kk": "Қазалы",
+          "population": 7000,
+          "load_before": 60211.384637788135,
+          "load_after": 60211.37569486505,
+          "reduction_pct": 1.4852545146364991e-05
+        },
+        {
+          "settlement": "aiteke_bi",
+          "name_ru": "Айтеке би",
+          "name_kk": "Әйтеке би",
+          "population": 30000,
+          "load_before": 236962.64813654133,
+          "load_after": 236962.6190508254,
+          "reduction_pct": 1.2274388461788085e-05
+        },
+        {
+          "settlement": "bekarys",
+          "name_ru": "Бекарыстан би",
+          "name_kk": "Бекарыстан би",
+          "population": 2000,
+          "load_before": 21008.73221794913,
+          "load_after": 21008.730505329113,
+          "reduction_pct": 8.15194367969284e-06
+        },
+        {
+          "settlement": "zhosaly",
+          "name_ru": "Жосалы",
+          "name_kk": "Жосалы",
+          "population": 18000,
+          "load_before": 24914.84107684966,
+          "load_after": 24914.830600249385,
+          "reduction_pct": 4.20496371803992e-05
+        },
+        {
+          "settlement": "baikonur",
+          "name_ru": "Байконур",
+          "name_kk": "Байқоңыр",
+          "population": 70000,
+          "load_before": 239700.28541991103,
+          "load_after": 239700.21240488166,
+          "reduction_pct": 3.04609688885502e-05
+        },
+        {
+          "settlement": "kyzylorda",
+          "name_ru": "Кызылорда",
+          "name_kk": "Қызылорда",
+          "population": 330000,
+          "load_before": 10207.797185399302,
+          "load_after": 10207.757268802496,
+          "reduction_pct": 0.0003910402614934482
+        }
+      ],
+      "cell_ids": [
+        13141,
+        3954,
+        15555
+      ],
+      "unknown_ids": []
+    },
+    "random_suitable": {
+      "mean": 53.71933518029856,
+      "p5": 1.4937804444883092,
+      "p95": 244.1954254108872,
+      "n_draws": 50,
+      "pool": "S > медианы и M > 0.5",
+      "pool_cells": 3275
+    },
+    "random_suitable_people_weighted_mean": 53.71933518029856,
+    "note": "nearest — пригодные ячейки, ближайшие к пунктам: заместитель «текущего плана», реального плана лесхоза нет в открытых данных"
+  },
+  "per_settlement": [
+    {
+      "settlement": "aralsk",
+      "name_ru": "Аральск",
+      "name_kk": "Арал",
+      "population": 30000,
+      "share_total_E": 0.1567,
+      "share_total_E_no_cap": 0.1118,
+      "share_top_E": 0.1112,
+      "cells_main_target": 3385,
+      "cells_within_radius": 23430,
+      "d_min_km": 0.3,
+      "d_median_km": 210.3
+    },
+    {
+      "settlement": "saksaulsky",
+      "name_ru": "Саксаульский",
+      "name_kk": "Сексеуіл",
+      "population": 13000,
+      "share_total_E": 0.0516,
+      "share_total_E_no_cap": 0.0375,
+      "share_top_E": 0.0299,
+      "cells_main_target": 229,
+      "cells_within_radius": 23017,
+      "d_min_km": 1.0,
+      "d_median_km": 211.2
+    },
+    {
+      "settlement": "kamystybas",
+      "name_ru": "Камыстыбас",
+      "name_kk": "Қамыстыбас",
+      "population": 4000,
+      "share_total_E": 0.0314,
+      "share_total_E_no_cap": 0.0215,
+      "share_top_E": 0.0256,
+      "cells_main_target": 0,
+      "cells_within_radius": 23680,
+      "d_min_km": 1.2,
+      "d_median_km": 189.5
+    },
+    {
+      "settlement": "zhalanash",
+      "name_ru": "Жаланаш",
+      "name_kk": "Жалаңаш",
+      "population": 2000,
+      "share_total_E": 0.0223,
+      "share_total_E_no_cap": 0.0149,
+      "share_top_E": 0.0131,
+      "cells_main_target": 0,
+      "cells_within_radius": 26139,
+      "d_min_km": 1.1,
+      "d_median_km": 154.8
+    },
+    {
+      "settlement": "akespe",
+      "name_ru": "Акеспе",
+      "name_kk": "Ақеспе",
+      "population": 1000,
+      "share_total_E": 0.006,
+      "share_total_E_no_cap": 0.004,
+      "share_top_E": 0.0023,
+      "cells_main_target": 0,
+      "cells_within_radius": 25753,
+      "d_min_km": 0.6,
+      "d_median_km": 171.2
+    },
+    {
+      "settlement": "karateren",
+      "name_ru": "Каратерен",
+      "name_kk": "Қаратерең",
+      "population": 2500,
+      "share_total_E": 0.0327,
+      "share_total_E_no_cap": 0.0218,
+      "share_top_E": 0.0187,
+      "cells_main_target": 1004,
+      "cells_within_radius": 26400,
+      "d_min_km": 0.9,
+      "d_median_km": 143.5
+    },
+    {
+      "settlement": "kazalinsk",
+      "name_ru": "Казалинск",
+      "name_kk": "Қазалы",
+      "population": 7000,
+      "share_total_E": 0.071,
+      "share_total_E_no_cap": 0.048,
+      "share_top_E": 0.0691,
+      "cells_main_target": 163,
+      "cells_within_radius": 23112,
+      "d_min_km": 0.8,
+      "d_median_km": 185.7
+    },
+    {
+      "settlement": "aiteke_bi",
+      "name_ru": "Айтеке би",
+      "name_kk": "Әйтеке би",
+      "population": 30000,
+      "share_total_E": 0.2795,
+      "share_total_E_no_cap": 0.1898,
+      "share_top_E": 0.2772,
+      "cells_main_target": 7348,
+      "cells_within_radius": 22855,
+      "d_min_km": 0.2,
+      "d_median_km": 189.1
+    },
+    {
+      "settlement": "bekarys",
+      "name_ru": "Бекарыстан би",
+      "name_kk": "Бекарыстан би",
+      "population": 2000,
+      "share_total_E": 0.0248,
+      "share_total_E_no_cap": 0.0166,
+      "share_top_E": 0.0238,
+      "cells_main_target": 0,
+      "cells_within_radius": 23898,
+      "d_min_km": 0.7,
+      "d_median_km": 177.4
+    },
+    {
+      "settlement": "zhosaly",
+      "name_ru": "Жосалы",
+      "name_kk": "Жосалы",
+      "population": 18000,
+      "share_total_E": 0.0294,
+      "share_total_E_no_cap": 0.0382,
+      "share_top_E": 0.0524,
+      "cells_main_target": 0,
+      "cells_within_radius": 11136,
+      "d_min_km": 138.2,
+      "d_median_km": 326.9
+    },
+    {
+      "settlement": "baikonur",
+      "name_ru": "Байконур",
+      "name_kk": "Байқоңыр",
+      "population": 70000,
+      "share_total_E": 0.2827,
+      "share_total_E_no_cap": 0.2406,
+      "share_top_E": 0.3516,
+      "cells_main_target": 7172,
+      "cells_within_radius": 15737,
+      "d_min_km": 78.7,
+      "d_median_km": 270.1
+    },
+    {
+      "settlement": "kyzylorda",
+      "name_ru": "Кызылорда",
+      "name_kk": "Қызылорда",
+      "population": 330000,
+      "share_total_E": 0.012,
+      "share_total_E_no_cap": 0.2553,
+      "share_top_E": 0.0251,
+      "cells_main_target": 1267,
+      "cells_within_radius": 2196,
+      "d_min_km": 250.1,
+      "d_median_km": 444.1
+    }
+  ],
+  "definitions": {
+    "E_ij": "S_i·P_ij·exp(−d_ij/L)·N_j при d_ij ≤ 300 км, иначе 0",
+    "M_i": "clip((0.35·r(NDVI) + 0.25·r(NMDI) + 0.25·(1−r(SI)) + 0.15·(1−r(TGSI)) − 0.2)/0.6, 0, 1), r — процентильный ранг по валидным ячейкам; доступность от дорог не учтена (нет слоя, W9). M — относительный ранг, а не агрономический порог: доля M > 0.5 заметно выше ≈15% пригодной площади по Kim et al. (2020)",
+    "class": "высокий: верхние 10% приоритета и M ≥ 0.4; надёжный высокий: плюс устойчивость ≥ 0.8; средний: 70–90% (или верхние 10% при M < порога); низкий: остальное",
+    "protected_population": "население пунктов, которые вместе получают 80% вклада ячейки (по убыванию E_ij); 0, если вклада нет",
+    "protects": "пункт с наибольшим E_ij; пусто, если вклада нет",
+    "scenario_area": "точная площадь: последняя ячейка засаживается частично"
+  },
+  "gate_rank_stability_ge_0_7": false
+}

@@ -1,0 +1,43 @@
+{
+  "calibrated_on": "2025v2",
+  "thresholds": {
+    "wet_bright_max": 0.20981429517269135,
+    "wet_ndmi_min": -0.06961742788553238,
+    "salt_bright_min": 0.3032350540161133,
+    "salt_ratio_min": 0.7383830547332764,
+    "salt_si_min": 0.2855634093284607,
+    "sand_tgsi_min": 0.15776866674423218,
+    "sand_ndmi_max": -0.12091495841741562
+  },
+  "quantiles": {
+    "wet_bright_max": [
+      "BRIGHT",
+      20
+    ],
+    "wet_ndmi_min": [
+      "NDMI",
+      70
+    ],
+    "salt_bright_min": [
+      "BRIGHT",
+      75
+    ],
+    "salt_ratio_min": [
+      "RATIO",
+      60
+    ],
+    "salt_si_min": [
+      "SI",
+      70
+    ],
+    "sand_tgsi_min": [
+      "TGSI",
+      75
+    ],
+    "sand_ndmi_max": [
+      "NDMI",
+      40
+    ]
+  },
+  "method": "перцентили голого пула сцены калибровки; далее пороги фиксированы"
+}

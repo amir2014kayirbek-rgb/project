@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q tests
+        env:
+          PYTHONIOENCODING: utf-8
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [python, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t aralshield:ci .
+      - name: Smoke test
+        run: |
+          mkdir -p data && chmod 777 data   # контейнер работает от пользователя uid 1000
+          docker run -d --name as -p 8000:8000 -v "$PWD/data:/app/data" -e ARALSHIELD_INTERNAL_KEY=ci-key aralshield:ci
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8000/v1/settlements && break; sleep 2; done
+          curl -fsS http://127.0.0.1:8000/ | grep -q AralShield
+          docker logs as

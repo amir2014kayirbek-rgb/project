@@ -1,0 +1,9 @@
+# HTTPS-сертификат Let's Encrypt выпускается автоматически для домена из переменной DOMAIN
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy api:8000
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Frame-Options "DENY"
+	}
+}

@@ -1,0 +1,22 @@
+{
+  "health": {
+    "yellow": 0.11,
+    "orange": 0.18,
+    "red": 0.73
+  },
+  "school": {
+    "yellow": 0.16,
+    "orange": 0.27,
+    "red": 0.73
+  },
+  "public": {
+    "yellow": 0.16,
+    "orange": 0.27,
+    "red": 0.73
+  },
+  "akimat": {
+    "yellow": 0.2,
+    "orange": 0.33,
+    "red": 0.73
+  }
+}

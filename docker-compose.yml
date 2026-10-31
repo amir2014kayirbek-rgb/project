@@ -1,0 +1,51 @@
+# AralShield на сервере: docker compose up -d --build
+# Подробности — docs/HOSTING.md
+services:
+  api:
+    build: .
+    image: aralshield:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # порт api открыт только во внутренней сети compose, поэтому прокси-заголовкам Caddy можно доверять
+      ARALSHIELD_TRUSTED_PROXIES: "*"
+    volumes: &vols
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+    # Наружу порт не открываем: доступ через caddy (HTTPS). Для проверки без домена
+    # можно временно заменить на "8000:8000".
+    expose: ["8000"]
+
+  scheduler:
+    image: aralshield:latest
+    restart: unless-stopped
+    env_file: .env
+    volumes: *vols
+    command: ["python", "deploy/scheduler.py"]
+    depends_on: [api]
+
+  bot:
+    image: aralshield:latest
+    restart: unless-stopped
+    env_file: .env
+    volumes: *vols
+    command: ["python", "-m", "aralshield.cli", "bot"]
+    depends_on: [api]
+    profiles: ["bot"]   # включается, когда в .env задан TELEGRAM_BOT_TOKEN: docker compose --profile bot up -d
+
+  caddy:
+    image: caddy:2.8
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [api]
+
+volumes:
+  caddy_data:
+  caddy_config:
