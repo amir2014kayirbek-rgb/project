@@ -230,6 +230,24 @@ def _fallback_prob(arts, h, row: pd.DataFrame, station: str, day: date) -> float
 
 
 # ---------------------------------------------------------------- персистентность
+WEATHER_MODELS_FALLBACK = ("gfs_seamless", "best_match")
+
+
+def _fetch_weather_with_fallback(st, deadline: float, notes: list[str]) -> pd.DataFrame:
+    """Основная модель погоды, при сбое — запасные (GFS, модель Open-Meteo по умолчанию).
+    Причина каждого сбоя попадает в пояснение к прогнозу."""
+    from aralshield.weather.openmeteo import OPER_FORECAST_MODEL, fetch_operational_forecast
+    last = None
+    for model in (OPER_FORECAST_MODEL, *WEATHER_MODELS_FALLBACK):
+        try:
+            return fetch_operational_forecast(st.lat, st.lon, model=model, deadline=deadline)
+        except Exception as e:
+            last = e
+            log.warning("погода %s (%s) недоступна: %s", st.id, model, e)
+            notes.append(f"модель погоды {model} недоступна: {type(e).__name__}: {str(e)[:120]}")
+    raise last
+
+
 def _recent_events(station_id: str, issue: date | None = None, deadline: float | None = None) -> pd.Series:
     """Свежие наблюдения станции для персистентности: текущий и прошлый год.
     Сеть читается только в память; при сбое берётся уже скачанный файл сырой зоны.
@@ -312,7 +330,7 @@ def issue_daily(issue: date | None = None, save: bool = True) -> list[dict]:
             notes.append("выпуск не уложился в срок — данные не загружались")
         else:
             try:
-                hourly = fetch_operational_forecast(st.lat, st.lon, deadline=deadline)
+                hourly = _fetch_weather_with_fallback(st, deadline, notes)
                 feat = daily_features(hourly, sec)
                 fetched, model = hourly.attrs.get("fetched_at"), hourly.attrs.get("model")
                 if save:
@@ -323,7 +341,7 @@ def issue_daily(issue: date | None = None, save: bool = True) -> list[dict]:
             except Exception as e:
                 log.error("прогноз погоды недоступен для %s: %s", st.id, e)
                 hourly, feat = None, None
-                notes.append("нет оперативного прогноза погоды")
+                notes.append(f"нет оперативного прогноза погоды: {type(e).__name__}: {str(e)[:160]}")
         events = pd.Series(dtype=float) if late else _recent_events(st.id, issue, deadline)
         cams = {}
         if not late:
