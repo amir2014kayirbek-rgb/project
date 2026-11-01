@@ -72,6 +72,30 @@ def _bootstrap_db() -> None:
             log.info("архив прогнозов тестовых лет: %d записей", predict.backtest_to_db())
 
 
+def _dispatch_github_forecast() -> bool:
+    """Просит GitHub Actions выпустить прогноз и прислать его на сайт.
+
+    Нужно на бесплатном Render: Open-Meteo отвечает 429 на общий IP хостинга,
+    а после «пробуждения» база пустая. Требует переменные окружения
+    GITHUB_TOKEN (fine-grained, право Actions: Read and write) и GITHUB_REPO (owner/repo).
+    """
+    import requests
+
+    token, repo = os.environ.get("GITHUB_TOKEN"), os.environ.get("GITHUB_REPO")
+    if not token or not repo:
+        return False
+    try:
+        r = requests.post(
+            f"https://api.github.com/repos/{repo}/actions/workflows/wake.yml/dispatches",
+            headers={"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"},
+            json={"ref": os.environ.get("GITHUB_REF_NAME", "main")}, timeout=20)
+        log.info("запрос прогноза в GitHub Actions: HTTP %s", r.status_code)
+        return r.status_code == 204
+    except Exception:
+        log.exception("не удалось запросить GitHub Actions")
+        return False
+
+
 def _refresh_loop() -> None:
     from aralshield import db
     from aralshield.forecast import predict
@@ -84,10 +108,16 @@ def _refresh_loop() -> None:
         try:
             last = db.rows("SELECT MAX(issue_date) AS d FROM forecasts WHERE mode='live'")[0]["d"]
             if last != predict.local_today().isoformat():
-                n = len(predict.issue_daily())
-                log.info("выпущен прогноз на %s: %d записей", predict.local_today(), n)
-        except Exception:  # сеть или Open-Meteo недоступны — повторим через час
-            log.exception("выпуск прогноза не удался")
+                try:
+                    n = len(predict.issue_daily())
+                    log.info("выпущен прогноз на %s: %d записей", predict.local_today(), n)
+                except Exception:  # Open-Meteo недоступен с IP хостинга — просим GitHub
+                    log.exception("выпуск прогноза на сервере не удался")
+                    if _dispatch_github_forecast():
+                        time.sleep(600)  # дадим Actions время прислать прогноз
+                        continue
+        except Exception:
+            log.exception("проверка прогноза не удалась")
         time.sleep(3600)
 
 
